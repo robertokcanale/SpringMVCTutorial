@@ -1,18 +1,20 @@
 package com.test;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.servelt.DispatcherServlet;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServeltException;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
-public class ApplicationInitializer {
+public class ApplicationInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException{
-        AnnotiationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContect();
-        context.register(ApplicationConfig.class)
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(ApplicationConfig.class);
         ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("mvc", new DispatcherServlet(context));
 
         servletRegistration.setLoadOnStartup(1); //this is the priority of initialization
-        servletRegistration.addMapping("/");
+        servletRegistration.addMapping("/"); //My URL Pattern
     }
 }
